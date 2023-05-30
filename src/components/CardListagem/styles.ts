@@ -15,6 +15,12 @@ export const CardContainer = styled.div`
   position: absolute;
 `
 
+export const Capa = styled.img`
+  width: 472px;
+  height: 217px;
+  object-fit: cover;
+`
+
 export const DivTitle = styled.div`
   display: flex;
   justify-content: space-between;

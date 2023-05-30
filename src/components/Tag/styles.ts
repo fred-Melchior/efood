@@ -13,4 +13,5 @@ export const TagContainer = styled.div<Props>`
   text-align: center;
   padding: 4px 6px;
   display: ${(props) => (props.size === 'small' ? 'inline-block' : 'block')};
+  cursor: ${(props) => (props.size === 'small' ? '' : 'pointer')};
 `

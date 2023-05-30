@@ -3,9 +3,9 @@ import { cores } from '../../styles'
 
 export const HeroContainer = styled.div`
   height: 384px;
-  max-width: 2040px;
   width: 100%;
   background-repeat: no-repeat;
+  background-size: cover;
   padding: 40px 0;
   display: flex;
   flex-direction: column;

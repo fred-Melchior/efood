@@ -16,11 +16,16 @@ export const EfoodDiv = styled.div`
 `
 
 export const Reastaurante = styled.div`
-  background-color: rgba(0, 0, 0, 0.1);
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 280px;
   color: ${cores.branco};
   font-size: 32px;
   padding: 16px 170px;
+
+  .overlay {
+    background-color: rgba(0, 0, 0, 1);
+  }
 
   h2 {
     font-weight: 100;

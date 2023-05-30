@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom'
 import {
+  Capa,
   Card,
   CardContainer,
   Desc,
@@ -7,43 +9,51 @@ import {
   Star,
   Title
 } from './styles'
-
 import Tag from '../Tag'
-
 import star from '../../assets/images/star.png'
-import { Link } from 'react-router-dom'
 
 export type Props = {
   img: string
   nome: string
   desc: string
+  avaliacao: string
+  id: number
   infos: string[]
 }
 
-const CardListagem = ({ img, nome, desc, infos }: Props) => (
-  <Card>
-    <Infos>
-      {infos.map((info) => (
-        <Tag size="small" key={info}>
-          {info}
-        </Tag>
-      ))}
-    </Infos>
-    <img src={img} alt="" />
-    <CardContainer>
-      <DivTitle>
-        <Title>{nome}</Title>
-        <Star>
-          <Title>4.9</Title>
-          <img src={star} alt="star" />
-        </Star>
-      </DivTitle>
-      <Desc>{desc}</Desc>
-      <Link to="/perfil">
-        <Tag size="small">Saiba mais</Tag>
-      </Link>
-    </CardContainer>
-  </Card>
-)
+const CardListagem = ({ img, nome, desc, infos, avaliacao, id }: Props) => {
+  const getDescricao = (descricao: string) => {
+    if (descricao.length > 95) {
+      return descricao.slice(0, 222) + '...'
+    }
+    return descricao
+  }
+
+  return (
+    <Card>
+      <Infos>
+        {infos.map((info) => (
+          <Tag size="small" key={info}>
+            {info}
+          </Tag>
+        ))}
+      </Infos>
+      <Capa src={img} alt="" />
+      <CardContainer>
+        <DivTitle>
+          <Title>{nome}</Title>
+          <Star>
+            <Title>{avaliacao}</Title>
+            <img src={star} alt="star" />
+          </Star>
+        </DivTitle>
+        <Desc>{getDescricao(desc)}</Desc>
+        <Link to={`/perfil/${id}`}>
+          <Tag size="small">Saiba mais</Tag>
+        </Link>
+      </CardContainer>
+    </Card>
+  )
+}
 
 export default CardListagem
