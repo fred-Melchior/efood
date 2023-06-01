@@ -7,6 +7,7 @@ export const Container = styled.div`
 `
 
 export const Lista = styled.ul`
+  width: 100%;
   display: inline-grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 48px 80px;
