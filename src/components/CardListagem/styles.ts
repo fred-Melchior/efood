@@ -5,6 +5,7 @@ import { TagContainer } from '../Tag/styles'
 export const Card = styled.div`
   width: 472px;
   height: 400px;
+  margin: 0 auto;
   border: 1px solid ${cores.red};
   background-color: ${cores.white};
   position: relative;
