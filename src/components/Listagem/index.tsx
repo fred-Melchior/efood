@@ -1,5 +1,5 @@
 import CardListagem from '../CardListagem'
-import { Lista } from './styles'
+import { Container, Lista } from './styles'
 
 import { Restaurante } from '../../Pages/Home'
 
@@ -22,7 +22,7 @@ const Listagem = ({ restaurante }: Props) => {
   }
 
   return (
-    <div className="container">
+    <Container className="container">
       <Lista>
         {restaurante.map((restaurante) => (
           <CardListagem
@@ -36,7 +36,7 @@ const Listagem = ({ restaurante }: Props) => {
           />
         ))}
       </Lista>
-    </div>
+    </Container>
   )
 }
 
