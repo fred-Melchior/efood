@@ -12,8 +12,6 @@ type Props = {
   prato: Pratos
 }
 
-const cartItem = pedido.find((i) => i == i)
-
 const Cardapio = ({ prato }: Props) => {
   const [modal, setModal] = useState({
     estaVisivel: false
@@ -54,10 +52,10 @@ const Cardapio = ({ prato }: Props) => {
       </Lista>
       <Modal className={modal.estaVisivel ? 'visivel' : ''}>
         <ModalContent className="overlay">
-          <ModalDiv className="container" key={cartItem?.id}>
-            <img src={cartItem?.foto} alt="" />
+          <ModalDiv className="container" key={prato.id}>
+            <img src={prato.foto} alt="" />
             <div>
-              <h3>{cartItem?.nome}</h3>
+              <h3>{prato.nome}</h3>
               <p>
                 A pizza Margherita é uma pizza clássica da culinária italiana,
                 reconhecida por sua simplicidade e sabor inigualável. Ela é
