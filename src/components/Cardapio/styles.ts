@@ -1,6 +1,7 @@
 import { styled } from 'styled-components'
 import { cores } from '../../styles'
 import { TagContainer } from '../Tag/styles'
+import fechar from '../../assets/images/fechar.png'
 
 export const Lista = styled.ul`
   padding: 32px;
@@ -45,6 +46,7 @@ export const ModalContent = styled.div`
 `
 
 export const ModalDiv = styled.div`
+  position: relative;
   max-width: 1024px;
   margin: 0 auto;
   padding: 32px;
@@ -60,6 +62,18 @@ export const ModalDiv = styled.div`
     margin-right: 24px;
     width: 280px;
     height: 280px;
+  }
+
+  .close {
+    cursor: pointer;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 16px;
+    height: 16px;
+    background-image: url(${fechar});
+    background-color: transparent;
+    border: none;
   }
 
   ${TagContainer} {

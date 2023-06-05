@@ -1,28 +1,74 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-
 import Cardapio from '../../components/Cardapio'
 import Header from '../../components/Header'
 
-import { Restaurante } from '../Home'
+import pizza from '../../assets/images/image 3.png'
 
-type Props = {
-  estabelecimento: Restaurante
+export type Pratos = {
+  foto: string
+  nome: string
+  desc: string
+  preco: number
+  id: number
 }
 
-const Perfil = ({ estabelecimento }: Props) => {
-  const { id } = useParams()
-  const [pratos, setPratos] = useState<Restaurante[]>([])
+export const pedido: Pratos[] = [
+  {
+    id: 1,
+    nome: 'Pizza Margherita',
+    desc: 'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
+    foto: pizza,
+    preco: 60.9
+  },
+  {
+    id: 2,
+    nome: 'Pizza Margherita',
+    desc: 'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
+    foto: pizza,
+    preco: 60.9
+  },
+  {
+    id: 3,
+    nome: 'Pizza Margherita',
+    desc: 'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
+    foto: pizza,
+    preco: 60.9
+  },
+  {
+    id: 4,
+    nome: 'Pizza Margherita',
+    desc: 'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
+    foto: pizza,
+    preco: 60.9
+  },
+  {
+    id: 5,
+    nome: 'Pizza Margherita',
+    desc: 'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
+    foto: pizza,
+    preco: 60.9
+  },
+  {
+    id: 6,
+    nome: 'Pizza Margherita',
+    desc: 'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
+    foto: pizza,
+    preco: 60.9
+  }
+]
 
-  useEffect(() => {
-    fetch(`https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`)
-      .then((res) => res.json())
-      .then((res) => setPratos(res))
-  }, [id])
+const Perfil = () => {
   return (
     <>
       <Header />
-      <Cardapio restaurante={pratos} />
+      <Cardapio
+        prato={{
+          foto: '',
+          nome: '',
+          desc: '',
+          preco: 0,
+          id: 1
+        }}
+      />
     </>
   )
 }

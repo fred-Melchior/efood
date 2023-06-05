@@ -49,7 +49,9 @@ const CardListagem = ({ img, nome, desc, infos, avaliacao, id }: Props) => {
         </DivTitle>
         <Desc>{getDescricao(desc)}</Desc>
         <Link to={`/perfil/${id}`}>
-          <Tag size="small">Saiba mais</Tag>
+          <Tag size="small" cursor="y">
+            Saiba mais
+          </Tag>
         </Link>
       </CardContainer>
     </Card>

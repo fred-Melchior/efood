@@ -1,14 +1,18 @@
 import vetorFundo from '../../assets/images/Vector.png'
-
 import logo from '../../assets/images/logo.png'
 import capaTratoria from '../../assets/images/pasta.png'
-import { EfoodDiv, HeaderContainer, Reastaurante } from './styles'
+import {
+  EfoodDiv,
+  HeaderContainer,
+  Reastaurante,
+  RestauranteLink
+} from './styles'
 
 const Header = () => {
   return (
     <HeaderContainer>
       <EfoodDiv style={{ backgroundImage: `url(${vetorFundo})` }}>
-        <h2>Restaurantes</h2>
+        <RestauranteLink to={'/'}>Restaurantes</RestauranteLink>
         <img src={logo} alt="efood" />
         <h2>Carrinho</h2>
       </EfoodDiv>

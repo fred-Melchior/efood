@@ -1,5 +1,6 @@
 import { styled } from 'styled-components'
 import { cores } from '../../styles'
+import { Link } from 'react-router-dom'
 
 export const HeaderContainer = styled.div`
   max-width: 2040px;
@@ -35,4 +36,11 @@ export const Reastaurante = styled.div`
   h1 {
     font-weight: bold;
   }
+`
+
+export const RestauranteLink = styled(Link)`
+  text-decoration: none;
+  color: ${cores.red};
+  font-weight: bold;
+  font-size: 24px;
 `
