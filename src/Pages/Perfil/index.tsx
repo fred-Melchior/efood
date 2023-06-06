@@ -57,18 +57,12 @@ export const pedido: Pratos[] = [
 ]
 
 const Perfil = () => {
+  const cartItem = pedido.find((i) => i === i)
+
   return (
     <>
       <Header />
-      <Cardapio
-        prato={{
-          foto: '',
-          nome: '',
-          desc: '',
-          preco: 0,
-          id: 1
-        }}
-      />
+      <Cardapio prato={cartItem!} />
     </>
   )
 }
