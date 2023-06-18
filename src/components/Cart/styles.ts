@@ -1,6 +1,7 @@
 import { styled } from 'styled-components'
 import { cores } from '../../styles'
 import excluir from '../../assets/images/lixo.png'
+import { TagContainer } from '../Tag/styles'
 
 export const CartContainer = styled.div`
   position: fixed;
@@ -11,6 +12,16 @@ export const CartContainer = styled.div`
   display: none;
   justify-content: flex-end;
   z-index: 1;
+
+  h3 {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 14px;
+    margin-top: 16px;
+  }
 
   &.is-open {
     display: flex;
@@ -31,7 +42,52 @@ export const SideBar = styled.aside`
   z-index: 1;
   width: 360px;
   padding: 32px 8px 0;
+  color: ${cores.ocre};
   background-color: ${cores.red};
+
+  &.closed {
+    display: none;
+  }
+
+  ${TagContainer} {
+    margin-top: 8px;
+  }
+
+  form {
+    div {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+`
+
+export const InputGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+
+  &.margin-top {
+    margin-top: 16px;
+  }
+
+  &.margin-bottom {
+    margin-bottom: 24px;
+  }
+
+  label {
+    margin-bottom: 8px;
+  }
+
+  input {
+    padding: 8px;
+    border: ${cores.ocre};
+    color: #000;
+    background-color: ${cores.ocre};
+
+    &.half {
+      width: 155px;
+    }
+  }
 `
 
 export const CartItem = styled.div`
@@ -46,16 +102,6 @@ export const CartItem = styled.div`
     width: 80px;
     height: 80px;
     margin-right: 8px;
-  }
-
-  h3 {
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  p {
-    font-size: 14px;
-    margin-top: 16px;
   }
 
   button {

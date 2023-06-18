@@ -1,0 +1,4 @@
+// criar um componente para a modal que receba as props do
+//  array de pedidos
+
+// mudar as infos do aside usando o usestate e as classes

@@ -14,6 +14,10 @@ export const EfoodDiv = styled.div`
   align-items: center;
   color: ${cores.red};
   padding: 60px 170px;
+
+  h2 {
+    cursor: pointer;
+  }
 `
 
 export const Reastaurante = styled.div`

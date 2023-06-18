@@ -1,38 +1,22 @@
 import { useDispatch } from 'react-redux'
-import { useState } from 'react'
 
-import { open, add } from '../../store/reducers/cart'
+import { openModal } from '../../store/reducers/modal'
 
-import { Lista, Modal, ModalContent, ModalDiv } from './styles'
+import { Lista } from './styles'
 import CardPerfil from '../CardPerfil'
-import Tag from '../Tag'
-import { Pratos, pedido } from '../../Pages/Perfil'
+import ModalPedido from '../Modal'
+
+import { pedido } from '../../Pages/Perfil'
 
 type Props = {
   prato: Pratos
 }
 
 const Cardapio = ({ prato }: Props) => {
-  const [modal, setModal] = useState({
-    estaVisivel: false
-  })
-
-  const abreModal = () =>
-    setModal({
-      estaVisivel: true
-    })
-
-  const fechaModal = () =>
-    setModal({
-      estaVisivel: false
-    })
-
   const dispatch = useDispatch()
 
-  const openCart = () => {
-    dispatch(open())
-    dispatch(add(prato))
-    fechaModal()
+  const abreModal = () => {
+    dispatch(openModal(prato))
   }
 
   return (
@@ -42,41 +26,16 @@ const Cardapio = ({ prato }: Props) => {
           <li key={p.id} onClick={abreModal}>
             <CardPerfil
               foto={p.foto}
-              desc={p.desc}
+              descricao={p.descricao}
               nome={p.nome}
               preco={p.preco}
               id={p.id}
+              porcao={p.porcao}
             />
           </li>
         ))}
       </Lista>
-      <Modal className={modal.estaVisivel ? 'visivel' : ''}>
-        <ModalContent className="overlay">
-          <ModalDiv className="container" key={prato.id}>
-            <img src={prato.foto} alt="" />
-            <div>
-              <h3>{prato.nome}</h3>
-              <p>
-                A pizza Margherita é uma pizza clássica da culinária italiana,
-                reconhecida por sua simplicidade e sabor inigualável. Ela é
-                feita com uma base de massa fina e crocante, coberta com molho
-                de tomate fresco, queijo mussarela de alta qualidade, manjericão
-                fresco e azeite de oliva extra-virgem. A combinação de sabores é
-                perfeita, com o molho de tomate suculento e ligeiramente ácido,
-                o queijo derretido e cremoso e as folhas de manjericão frescas,
-                que adicionam um toque de sabor herbáceo. É uma pizza simples,
-                mas deliciosa, que agrada a todos os paladares e é uma ótima
-                opção para qualquer ocasião.
-              </p>
-              <p>Serve: de 2 a 3 pessoas</p>
-              <Tag size="big" onClick={openCart}>
-                Adicionar ao carrinho
-              </Tag>
-            </div>
-            <button className="close" type="button" onClick={fechaModal} />
-          </ModalDiv>
-        </ModalContent>
-      </Modal>
+      <ModalPedido prato={prato} />
     </div>
   )
 }
