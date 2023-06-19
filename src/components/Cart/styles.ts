@@ -84,6 +84,10 @@ export const InputGroup = styled.div`
     color: #000;
     background-color: ${cores.ocre};
 
+    &.error {
+      border: 1px solid red;
+    }
+
     &.half {
       width: 155px;
     }

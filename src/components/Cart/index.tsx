@@ -3,6 +3,8 @@ import InputMask from 'react-input-mask'
 import { useFormik } from 'formik'
 import * as Y from 'yup'
 
+import { usePurchaseMutation } from '../../services/api'
+
 import { RootReducer } from '../../store'
 import * as R from '../../store/reducers/cart'
 
@@ -13,6 +15,8 @@ import * as S from './styles'
 const Cart = () => {
   const { isOpen, isCart, isDelivery, isPayment, isMessage, items } =
     useSelector((state: RootReducer) => state.cart)
+
+  const [purchase, { data }] = usePurchaseMutation()
 
   const dispatch = useDispatch()
 
@@ -49,8 +53,8 @@ const Cart = () => {
   }
 
   const openMessage = () => {
-    dispatch(R.closePayment())
     dispatch(R.message())
+    dispatch(R.closePayment())
   }
 
   const finish = () => {
@@ -108,23 +112,56 @@ const Cart = () => {
         .min(5, 'Digite o nome impresso no cartão')
         .required('O campo é obrigatório'),
       cardNumber: Y.string()
-        .min(16, 'Digite o nome impresso no cartão')
+        .min(16, 'Digite o número impresso no cartão')
         .required('O campo é obrigatório'),
       cardCode: Y.string()
-        .min(3, 'Digite o nome impresso no cartão')
+        .min(3, 'Digite o código impresso no verso do cartão')
         .required('O campo é obrigatório'),
       cardMonth: Y.string()
-        .min(2, 'Digite o nome impresso no cartão')
+        .min(2, 'Digite o mês de validade impresso no cartão')
         .required('O campo é obrigatório'),
       cardYear: Y.string()
-        .min(2, 'Digite o nome impresso no cartão')
+        .min(2, 'Digite o ano de validade impresso no cartão')
         .required('O campo é obrigatório')
     }),
-    onSubmit(values, formikHelpers) {
-      values
-      formikHelpers
+    onSubmit(values) {
+      purchase({
+        delivery: {
+          receiver: values.deliveryName,
+          address: {
+            city: values.deliveryCity,
+            zipCode: values.deliveryCEP,
+            description: values.deliveryAdress,
+            number: Number(values.deliveryNumber),
+            complement: values.deliveryComp
+          }
+        },
+        payment: {
+          card: {
+            name: values.cardName,
+            number: values.cardNumber,
+            code: Number(values.cardCode),
+            expires: {
+              month: Number(values.cardMonth),
+              year: Number(values.cardYear)
+            }
+          }
+        },
+        products: items.map((i) => ({
+          id: i.id,
+          price: i.preco
+        }))
+      })
     }
   })
+
+  const checkInputHasError = (fieldName: string) => {
+    const isTouched = fieldName in form.touched
+    const isInvalid = fieldName in form.errors
+    const hasError = isTouched && isInvalid
+
+    return hasError
+  }
 
   return (
     <>
@@ -168,6 +205,7 @@ const Cart = () => {
             <S.InputGroup className="margin-top">
               <label htmlFor="deliveryName">Quem irá receber</label>
               <input
+                className={checkInputHasError('deliveryName') ? 'error' : ''}
                 id="deliveryName"
                 name="deliveryName"
                 type="text"
@@ -177,6 +215,7 @@ const Cart = () => {
             <S.InputGroup>
               <label htmlFor="deliveryAdress">Endereço</label>
               <input
+                className={checkInputHasError('deliveryAdress') ? 'error' : ''}
                 id="deliveryAdress"
                 name="deliveryAdress"
                 type="text"
@@ -186,6 +225,7 @@ const Cart = () => {
             <S.InputGroup>
               <label htmlFor="deliveryCity">Cidade</label>
               <input
+                className={checkInputHasError('deliveryCity') ? 'error' : ''}
                 id="deliveryCity"
                 name="deliveryCity"
                 type="text"
@@ -196,10 +236,14 @@ const Cart = () => {
               <S.InputGroup>
                 <label htmlFor="deliveryCEP">CEP</label>
                 <InputMask
+                  className={
+                    checkInputHasError('deliveryName')
+                      ? 'error' && 'half'
+                      : 'half'
+                  }
                   id="deliveryCEP"
                   name="deliveryCEP"
                   type="text"
-                  className="half"
                   mask="99.999-999"
                   required
                 />
@@ -207,19 +251,28 @@ const Cart = () => {
               <S.InputGroup>
                 <label htmlFor="deliveryNumber">Número</label>
                 <input
+                  className={
+                    checkInputHasError('deliveryName')
+                      ? 'error' && 'half'
+                      : 'half'
+                  }
                   id="deliveryNumber"
                   name="deliveryNumber"
                   type="text"
-                  className="half"
                   required
                 />
               </S.InputGroup>
             </div>
             <S.InputGroup className="margin-bottom">
               <label htmlFor="deliveryComp">Complemento (opcional)</label>
-              <input id="deliveryComp" name="deliveryComp" type="text" />
+              <input
+                className={checkInputHasError('deliveryComp') ? 'error' : ''}
+                id="deliveryComp"
+                name="deliveryComp"
+                type="text"
+              />
             </S.InputGroup>
-            <Tag type="submit" onClick={openPagamento}>
+            <Tag type="button" onClick={openPagamento}>
               Continuar com o pagamento
             </Tag>
             <Tag type="button" onClick={backCart}>
@@ -228,16 +281,23 @@ const Cart = () => {
           </form>
         </S.SideBar>
         <S.SideBar className={isPayment ? '' : 'closed'}>
-          <form action="">
+          <form onSubmit={form.handleSubmit}>
             <h3>Pagamento - {formataPreco(getTotal())}</h3>
             <S.InputGroup>
               <label htmlFor="cardName">Nome no cartão</label>
-              <input type="text" id="cardName" name="cardName" required />
+              <input
+                className={checkInputHasError('cardName') ? 'error' : ''}
+                type="text"
+                id="cardName"
+                name="cardName"
+                required
+              />
             </S.InputGroup>
             <div>
               <S.InputGroup style={{ width: 228 }}>
                 <label htmlFor="cardNumber">Número do cartão</label>
                 <InputMask
+                  className={checkInputHasError('cardNumber') ? 'error' : ''}
                   type="text"
                   id="cardNumber"
                   name="cardNumber"
@@ -248,6 +308,7 @@ const Cart = () => {
               <S.InputGroup style={{ width: 87 }}>
                 <label htmlFor="cardCode">CVV</label>
                 <InputMask
+                  className={checkInputHasError('cardCode') ? 'error' : ''}
                   type="text"
                   id="cardCode"
                   name="cardCode"
@@ -260,6 +321,7 @@ const Cart = () => {
               <S.InputGroup>
                 <label htmlFor="cardMonth">Mês de vencimento</label>
                 <InputMask
+                  className={checkInputHasError('cardMonth') ? 'error' : ''}
                   type="text"
                   id="cardMonth"
                   name="cardMonth"
@@ -270,6 +332,7 @@ const Cart = () => {
               <S.InputGroup>
                 <label htmlFor="cardYear">Ano de vencimento</label>
                 <InputMask
+                  className={checkInputHasError('cardYear') ? 'error' : ''}
                   type="text"
                   id="cardYear"
                   name="cardYear"
@@ -287,7 +350,7 @@ const Cart = () => {
           </Tag>
         </S.SideBar>
         <S.SideBar className={isMessage ? '' : 'closed'}>
-          <h3>Pedido realizado - ID: #00123</h3>
+          <h3>Pedido realizado - ID: {data?.orderId}</h3>
           <p>
             Estamos felizes em informar que seu pedido já está em processo de
             preparação e, em breve, será entregue no endereço fornecido.{' '}
@@ -305,13 +368,12 @@ const Cart = () => {
             Esperamos que desfrute de uma deliciosa e agradável experiência
             gastronômica. Bom apetite!
           </p>
-          <Tag type="submit" onClick={finish}>
+          <Tag type="button" onClick={finish}>
             Concluir
           </Tag>
         </S.SideBar>
       </S.CartContainer>
     </>
-    //finalizar formik e yup
   )
 }
 
